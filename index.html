@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suches Weekend · May 2–4, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EFE7D6;
+    --bg-deep: #E5DAC2;
+    --paper: #F6F0E1;
+    --ink: #1B2620;
+    --ink-soft: #3D4943;
+    --ink-muted: #6F6A5C;
+    --rust: #B5511E;
+    --rust-deep: #8C3A12;
+    --moss: #3F5C42;
+    --moss-deep: #1F3024;
+    --gold: #C29230;
+    --rule: #C9BFA8;
+    --rule-deep: #8C8164;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(63,92,66,0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(181,81,30,0.04) 0%, transparent 50%);
+  }
+
+  /* Subtle grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 56px 0 32px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  /* Topographic SVG background */
+  .topo {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .hero-meta span::before {
+    content: '✦  ';
+    color: var(--rust);
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(56px, 11vw, 156px);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--moss-deep);
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: end;
+  }
+
+  .hero-tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  .hero-coords {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .hero-coords div { display: flex; justify-content: flex-end; gap: 14px; }
+  .hero-coords .label { color: var(--rust); }
+
+  /* ============ STATS STRIP ============ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    padding: 32px 0;
+  }
+  .stat {
+    padding: 0 24px;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+  .stat:last-child { border-right: none; }
+  .stat:first-child { padding-left: 0; }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--moss-deep);
+    letter-spacing: -0.03em;
+  }
+  .stat-num span { font-size: 22px; color: var(--ink-muted); margin-left: 4px; }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 10px;
+  }
+
+  /* ============ WEATHER ============ */
+  .weather {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    color: var(--moss-deep);
+  }
+  .section-head h2 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+  .section-head .src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .weather-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .wcard {
+    background: var(--paper);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .wcard.featured { background: var(--moss-deep); color: var(--paper); }
+  .wcard.featured .wlabel { color: rgba(246,240,225,0.6); }
+  .wcard.featured .wmeta { color: rgba(246,240,225,0.7); }
+
+  .wlabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .wday {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  .wday em { font-style: italic; }
+
+  .wtemp {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .wtemp span { font-size: 28px; vertical-align: top; margin-left: 2px; }
+
+  .wcond {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .wicon {
+    width: 32px; height: 32px;
+    flex-shrink: 0;
+  }
+  .wmeta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ============ ROUTE MAP ============ */
+  .route-map {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .map-wrap {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    position: relative;
+  }
+  .map-wrap svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .map-legend {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: var(--paper);
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+  }
+  .map-legend div { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .map-legend .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ============ DAYS ============ */
+  .days { padding: 48px 0; }
+
+  .day {
+    border-top: 1px solid var(--rule);
+    padding: 56px 0;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .day:first-child { border-top: none; padding-top: 16px; }
+
+  .day-meta {
+    position: sticky;
+    top: 32px;
+  }
+
+  .day-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 140px;
+    line-height: 0.85;
+    color: var(--rust);
+    letter-spacing: -0.05em;
+    font-variation-settings: 'SOFT' 100;
+  }
+  .day-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 16px;
+  }
+  .day-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--moss-deep);
+    margin-top: 12px;
+  }
+  .day-drive {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .day-drive strong {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+
+  .stops {
+    position: relative;
+  }
+
+  .stops::before {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 14px;
+    bottom: 14px;
+    width: 1px;
+    border-left: 1px dashed var(--rule-deep);
+  }
+
+  .stop {
+    position: relative;
+    padding-left: 56px;
+    padding-bottom: 40px;
+  }
+  .stop:last-child { padding-bottom: 0; }
+
+  .stop::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--rust);
+  }
+  .stop.featured::before {
+    background: var(--rust);
+    box-shadow: 0 0 0 4px rgba(181,81,30,0.15);
+  }
+
+  .stop-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+  .stop-time .dur { color: var(--ink-muted); margin-left: 12px; }
+
+  .stop-name {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .stop-addr {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .stop-note {
+    margin-top: 12px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 600px;
+  }
+  .stop-note .alert {
+    display: inline-block;
+    background: var(--rust);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .stop-tags {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border: 1px solid var(--rule);
+    padding: 4px 10px;
+    background: var(--paper);
+  }
+
+  /* ============ NOTES ============ */
+  .notes {
+    background: var(--moss-deep);
+    color: var(--paper);
+    padding: 64px 0;
+    margin-top: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .notes::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q 15 10 30 30 T 60 30' stroke='%23F6F0E1' stroke-width='0.5' fill='none' opacity='0.06'/%3E%3Cpath d='M0 45 Q 15 25 30 45 T 60 45' stroke='%23F6F0E1' stroke-width='0.5' fill='none' opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 120px;
+    pointer-events: none;
+  }
+  .notes h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    margin-bottom: 32px;
+  }
+  .notes h2 em { font-style: italic; color: var(--gold); }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 56px;
+  }
+  .note {
+    border-top: 1px solid rgba(246,240,225,0.2);
+    padding-top: 16px;
+  }
+  .note h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .note p {
+    font-size: 14.5px;
+    color: rgba(246,240,225,0.85);
+    line-height: 1.6;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 48px 0;
+    border-top: 1px solid var(--rule);
+    background: var(--bg-deep);
+    position: relative;
+    z-index: 2;
+  }
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-row em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  /* ============ ANIMATION ============ */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1, .hero-sub, .stats > *, .weather, .days, .notes {
+    animation: rise 0.8s ease-out backwards;
+  }
+  .hero h1 { animation-delay: 0.1s; }
+  .hero-sub { animation-delay: 0.25s; }
+  .stats > *:nth-child(1) { animation-delay: 0.4s; }
+  .stats > *:nth-child(2) { animation-delay: 0.5s; }
+  .stats > *:nth-child(3) { animation-delay: 0.6s; }
+  .stats > *:nth-child(4) { animation-delay: 0.7s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 32px 0 24px; }
+    .hero-meta { font-size: 10px; }
+    .hero-sub { grid-template-columns: 1fr; gap: 24px; }
+    .hero-coords { text-align: left; }
+    .hero-coords div { justify-content: flex-start; }
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 24px 0; }
+    .stat { padding: 0 16px; }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(3) { padding-left: 0; }
+    .stat-num { font-size: 38px; }
+    .weather-grid { grid-template-columns: 1fr; }
+    .day {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 40px 0;
+    }
+    .day-meta { position: static; }
+    .day-num { font-size: 100px; }
+    .stop { padding-left: 40px; }
+    .notes-grid { grid-template-columns: 1fr; gap: 24px; }
+    .map-legend { position: static; margin-top: 16px; display: inline-block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <svg class="topo" viewBox="0 0 600 400" preserveAspectRatio="xMaxYMid meet">
+      <g fill="none" stroke="#3F5C42" stroke-width="0.6">
+        <path d="M50,200 Q150,150 250,180 T450,160 T580,190"/>
+        <path d="M40,230 Q160,180 260,215 T460,195 T590,225"/>
+        <path d="M30,260 Q170,210 270,250 T470,230 T600,260"/>
+        <path d="M20,290 Q180,240 280,285 T480,265 T610,295"/>
+        <path d="M60,170 Q140,120 240,150 T440,130 T570,160"/>
+        <path d="M70,140 Q130,90 230,120 T430,100 T560,130"/>
+      </g>
+      <g fill="#B5511E" opacity="0.6">
+        <circle cx="180" cy="195" r="3"/>
+        <circle cx="320" cy="170" r="3"/>
+        <circle cx="460" cy="155" r="3"/>
+      </g>
+    </svg>
+
+    <div class="hero-meta">
+      <span>FIELD JOURNAL № 01</span>
+      <span>NORTH GA · CHATTAHOOCHEE NF</span>
+      <span>MAY 2 — MAY 4, 2026</span>
+    </div>
+
+    <h1>Suches<br><em>Weekend</em></h1>
+
+    <div class="hero-sub">
+      <p class="hero-tagline">
+        Three days through wine country, the Blue Ridge foothills, Georgia's highest peak,
+        and the longest swinging bridge east of the Mississippi.
+      </p>
+      <div class="hero-coords">
+        <div><span class="label">ORIGIN</span> Chamblee, GA · 33.89°N 84.31°W</div>
+        <div><span class="label">BASE</span> Postcard Cabins, Suches · 34.72°N 84.07°W</div>
+        <div><span class="label">RETURN</span> Gainesville → Chamblee</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-num">3<span>days</span></div>
+      <div class="stat-label">Trip Length</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">~250<span>mi</span></div>
+      <div class="stat-label">Total Drive</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4,784<span>ft</span></div>
+      <div class="stat-label">Brasstown Bald Peak</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">270<span>ft</span></div>
+      <div class="stat-label">Swinging Bridge Span</div>
+    </div>
+  </section>
+
+  <!-- WEATHER -->
+  <section class="weather">
+    <div class="section-head">
+      <h2>The <em>forecast</em></h2>
+      <div class="src">Source: NWS Peachtree City · Updated Apr 28</div>
+    </div>
+    <div class="weather-grid">
+      <div class="wcard">
+        <div class="wlabel">Day 01 · Sat May 2</div>
+        <div class="wday">Showers <em>early</em></div>
+        <div class="wtemp">64<span>°F</span></div>
+        <div class="wcond">
+          <svg class="wicon" viewBox="0 0 32 32" fill="none" stroke="#3D4943" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="22" cy="11" r="4"/>
+            <path d="M6 18 Q6 14 10 14 Q11 11 14 11 Q18 11 19 14 Q23 14 23 18 Q23 21 19 21 H10 Q6 21 6 18Z"/>
+            <path d="M10 25 L9 28 M14 25 L13 28 M18 25 L17 28"/>
+          </svg>
+          <span class="wmeta">Showers likely before 8am · 60% precip · Low 40°F</span>
+        </div>
+      </div>
+      <div class="wcard featured">
+        <div class="wlabel">Day 02 · Sun May 3</div>
+        <div class="wday">Bluebird <em>day</em></div>
+        <div class="wtemp">67<span>°F</span></div>
+        <div class="wcond">
+          <svg class="wicon" viewBox="0 0 32 32" fill="none" stroke="#F6F0E1" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="16" cy="16" r="6"/>
+            <path d="M16 4v3M16 25v3M4 16h3M25 16h3M7 7l2 2M23 23l2 2M25 7l-2 2M9 23l-2 2"/>
+          </svg>
+          <span class="wmeta">Sunny · clear skies for Brasstown Bald · Low 42°F</span>
+        </div>
+      </div>
+      <div class="wcard">
+        <div class="wlabel">Day 03 · Mon May 4</div>
+        <div class="wday">Sunny &amp; <em>warmer</em></div>
+        <div class="wtemp">72<span>°F</span></div>
+        <div class="wcond">
+          <svg class="wicon" viewBox="0 0 32 32" fill="none" stroke="#3D4943" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="16" cy="16" r="6"/>
+            <path d="M16 4v3M16 25v3M4 16h3M25 16h3M7 7l2 2M23 23l2 2M25 7l-2 2M9 23l-2 2"/>
+          </svg>
+          <span class="wmeta">Sunny · perfect for the swinging bridge hike · Low 48°F</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROUTE MAP -->
+  <section class="route-map">
+    <div class="section-head">
+      <h2>The <em>route</em></h2>
+      <div class="src">Approximate · not to scale</div>
+    </div>
+    <div class="map-wrap">
+      <svg viewBox="0 0 900 380" preserveAspectRatio="xMidYMid meet">
+        <!-- Topographic background lines -->
+        <g fill="none" stroke="#C9BFA8" stroke-width="0.5" opacity="0.6">
+          <path d="M0,80 Q200,60 400,90 T800,75 L900,80"/>
+          <path d="M0,120 Q200,100 400,130 T800,115 L900,120"/>
+          <path d="M0,160 Q200,140 400,170 T800,155 L900,160"/>
+          <path d="M0,200 Q200,180 400,210 T800,195 L900,200"/>
+          <path d="M0,240 Q200,220 400,250 T800,235 L900,240"/>
+          <path d="M0,280 Q200,260 400,290 T800,275 L900,280"/>
+          <path d="M0,320 Q200,300 400,330 T800,315 L900,320"/>
+        </g>
+
+        <!-- Route lines -->
+        <!-- Day 1: Chamblee → Dahlonega → Wolf Mountain → Cabin -->
+        <path d="M780,330 Q700,310 620,280 Q560,250 510,210 Q470,180 430,160" stroke="#B5511E" stroke-width="2" stroke-dasharray="6 4" fill="none" stroke-linecap="round"/>
+        <!-- Day 2: Cabin → Cooper Creek → Brasstown Bald → Mercier → Cabin loop -->
+        <path d="M430,160 Q420,140 410,130 Q380,90 280,80 Q200,80 170,100 Q150,120 200,160 Q300,180 430,160" stroke="#3F5C42" stroke-width="2" stroke-dasharray="6 4" fill="none" stroke-linecap="round"/>
+        <!-- Day 3: Cabin → Swinging Bridge → Gainesville -->
+        <path d="M430,160 Q480,180 510,200 Q550,250 600,290 Q670,330 740,340" stroke="#C29230" stroke-width="2" stroke-dasharray="6 4" fill="none" stroke-linecap="round"/>
+
+        <!-- Pins -->
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#1B2620">
+          <!-- Chamblee -->
+          <circle cx="780" cy="330" r="5" fill="#1B2620"/>
+          <text x="790" y="334">Chamblee</text>
+
+          <!-- Dahlonega -->
+          <circle cx="620" cy="280" r="4" fill="#B5511E"/>
+          <text x="628" y="284">Dahlonega</text>
+
+          <!-- Wolf Mountain -->
+          <circle cx="540" cy="220" r="4" fill="#B5511E"/>
+          <text x="548" y="224">Wolf Mountain</text>
+
+          <!-- Postcard Cabins (HUB) -->
+          <circle cx="430" cy="160" r="9" fill="#F6F0E1" stroke="#1F3024" stroke-width="2.5"/>
+          <circle cx="430" cy="160" r="3" fill="#1F3024"/>
+          <text x="442" y="158" font-weight="500">Postcard Cabins</text>
+          <text x="442" y="170" fill="#6F6A5C" font-size="9">SUCHES · BASE</text>
+
+          <!-- Cooper Creek -->
+          <circle cx="385" cy="140" r="3" fill="#3F5C42"/>
+          <text x="345" y="125" fill="#3F5C42" font-size="10">Cooper Cr.</text>
+
+          <!-- Brasstown Bald -->
+          <circle cx="280" cy="80" r="6" fill="#3F5C42"/>
+          <polygon points="280,72 285,82 275,82" fill="#F6F0E1"/>
+          <text x="290" y="78" fill="#3F5C42" font-weight="500">Brasstown Bald</text>
+          <text x="290" y="90" fill="#6F6A5C" font-size="9">4,784 FT</text>
+
+          <!-- Mercier -->
+          <circle cx="170" cy="100" r="4" fill="#3F5C42"/>
+          <text x="100" y="115" fill="#3F5C42" font-size="10">Mercier</text>
+
+          <!-- Swinging Bridge -->
+          <circle cx="510" cy="200" r="4" fill="#C29230"/>
+          <text x="465" y="196" fill="#8C6720" font-size="10" text-anchor="end">Swinging Br.</text>
+
+          <!-- Gainesville -->
+          <circle cx="740" cy="340" r="4" fill="#C29230"/>
+          <text x="730" y="354" fill="#8C6720" text-anchor="end">Gainesville</text>
+        </g>
+
+        <!-- Compass -->
+        <g transform="translate(50,330)" font-family="JetBrains Mono, monospace" font-size="10" fill="#6F6A5C">
+          <circle cx="0" cy="0" r="18" fill="none" stroke="#C9BFA8"/>
+          <path d="M0,-14 L3,-2 L0,4 L-3,-2 Z" fill="#B5511E"/>
+          <text x="0" y="-22" text-anchor="middle">N</text>
+        </g>
+      </svg>
+      <div class="map-legend">
+        <div><span class="dot" style="background:#B5511E"></span>Day 1 · Outbound</div>
+        <div><span class="dot" style="background:#3F5C42"></span>Day 2 · Loop</div>
+        <div><span class="dot" style="background:#C29230"></span>Day 3 · Homeward</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAYS -->
+  <section class="days">
+
+    <!-- DAY 1 -->
+    <article class="day">
+      <div class="day-meta">
+        <div class="day-num">01</div>
+        <div class="day-date">Saturday · May 2</div>
+        <div class="day-title">Wine country to<br>the cabin</div>
+        <div class="day-drive">
+          <strong>Drive Total</strong>
+          ~125 mi · ~2h 45m behind the wheel
+          <br><br>
+          Chamblee → Dahlonega: 1h 30m<br>
+          Dahlonega → Wolf Mountain: 20m<br>
+          Wolf Mountain → Cabin: 40m
+        </div>
+      </div>
+
+      <div class="stops">
+
+        <div class="stop">
+          <div class="stop-time">09:00 AM <span class="dur">· 45 min</span></div>
+          <div class="stop-name">Jethro's Coffee &amp; Public House</div>
+          <div class="stop-addr">21 N Grove St, Dahlonega · ★ 4.8</div>
+          <div class="stop-note">Opens at 8am Saturdays. Tucked past Gateway Antiques on the square — easy to walk past it. Lattes, cinnamon rolls, comfy seating. Good fuel before the climb.</div>
+          <div class="stop-tags">
+            <span class="tag">Coffee</span>
+            <span class="tag">Pastries</span>
+          </div>
+        </div>
+
+        <div class="stop featured">
+          <div class="stop-time">11:00 AM <span class="dur">· 2 hrs</span></div>
+          <div class="stop-name">Wolf Mountain Vineyards</div>
+          <div class="stop-addr">180 Wolf Mountain Trail, Dahlonega · ★ 4.6</div>
+          <div class="stop-note">Doors at 11am sharp. 200+ medals, mountain views, brunch service. Reserve ahead — Saturday tables go fast and the wine tasting closes at 5pm.</div>
+          <div class="stop-tags">
+            <span class="tag">Wine Tasting</span>
+            <span class="tag">Lunch</span>
+            <span class="tag">Reservation</span>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-time">04:00 PM <span class="dur">· check-in</span></div>
+          <div class="stop-name">Postcard Cabins Chattahoochee</div>
+          <div class="stop-addr">286 Mossy Elm Rdg, Suches · ★ 4.3</div>
+          <div class="stop-note">
+            <span class="alert">heads up</span>
+            Marriott lists check-in at 4pm, not 3pm — confirm with your booking. Stock groceries in Dahlonega first. Daily destination fee covers firewood, s'mores kit, and coffee. Cell signal drops on the approach.
+          </div>
+          <div class="stop-tags">
+            <span class="tag">Lodging</span>
+            <span class="tag">Fire Pit</span>
+            <span class="tag">No Wifi</span>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- DAY 2 -->
+    <article class="day">
+      <div class="day-meta">
+        <div class="day-num">02</div>
+        <div class="day-date">Sunday · May 3</div>
+        <div class="day-title">Hike, summit,<br>orchards</div>
+        <div class="day-drive">
+          <strong>Drive Total</strong>
+          ~80 mi · ~2h behind the wheel
+          <br><br>
+          Cabin → Cooper Creek: 10m<br>
+          Cooper Creek → Brasstown: 45m<br>
+          Brasstown → Mercier: 35m<br>
+          Mercier → Cabin: 30m
+        </div>
+      </div>
+
+      <div class="stops">
+
+        <div class="stop">
+          <div class="stop-time">08:30 AM <span class="dur">· 90 min</span></div>
+          <div class="stop-name">Cooper Creek Trail</div>
+          <div class="stop-addr">Cooper Creek Recreation Area · ★ 4.7</div>
+          <div class="stop-note">Easy 1.7-mile loop along the creek, wildflowers in bloom, dog-friendly on leash. Perfect warm-up before the summit. About 10 min from the cabin.</div>
+          <div class="stop-tags">
+            <span class="tag">Easy Hike</span>
+            <span class="tag">1.7 mi</span>
+          </div>
+        </div>
+
+        <div class="stop featured">
+          <div class="stop-time">11:30 AM <span class="dur">· 2 hrs</span></div>
+          <div class="stop-name">Brasstown Bald</div>
+          <div class="stop-addr">Brasstown Bald, Young Harris · 4,784 ft · ★ 4.8</div>
+          <div class="stop-note">Georgia's highest point — four states visible from the deck on a clear day. Sunday's bluebird skies are your window. $8 shuttle to the summit, or hike the steep 0.6-mile trail. Go before the afternoon crowds.</div>
+          <div class="stop-tags">
+            <span class="tag">Summit</span>
+            <span class="tag">$8 Shuttle</span>
+            <span class="tag">Highest in GA</span>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-time">02:30 PM <span class="dur">· 60 min</span></div>
+          <div class="stop-name">Mercier Orchards</div>
+          <div class="stop-addr">8660 Blue Ridge Dr, Blue Ridge · ★ 4.7 · 9k+ reviews</div>
+          <div class="stop-note">65-year-old family orchard. Cider tasting bar, fried apple pies, fresh pastries, jams, wines. Stock up for the last evening at the cabin. Closes at 5pm.</div>
+          <div class="stop-tags">
+            <span class="tag">Orchard</span>
+            <span class="tag">Cider</span>
+            <span class="tag">Bakery</span>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-time">04:30 PM <span class="dur">· evening</span></div>
+          <div class="stop-name">Back to the cabin</div>
+          <div class="stop-addr">Postcard Cabins Chattahoochee · Suches</div>
+          <div class="stop-note">Last fire of the trip. Quiet hours kick in at 10pm.</div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- DAY 3 -->
+    <article class="day">
+      <div class="day-meta">
+        <div class="day-num">03</div>
+        <div class="day-date">Monday · May 4</div>
+        <div class="day-title">Swinging Bridge<br>&amp; Gainesville</div>
+        <div class="day-drive">
+          <strong>Drive Total</strong>
+          ~80 mi · ~2h behind the wheel
+          <br><br>
+          Cabin → Swinging Bridge: 15-20m<br>
+          Swinging Bridge → Gainesville: 1h 30m
+        </div>
+      </div>
+
+      <div class="stops">
+
+        <div class="stop featured">
+          <div class="stop-time">10:00 AM <span class="dur">· 2+ hrs</span></div>
+          <div class="stop-name">Toccoa River Swinging Bridge</div>
+          <div class="stop-addr">Benton MacKaye Trail, Fannin County · 270 ft long</div>
+          <div class="stop-note">
+            <span class="alert">road closed</span>
+            FS Road 816 (the direct route) is currently shut. Park at the GA Hwy 60 trailhead and hike in via the Benton MacKaye Trail — about 3.5 mi each way. Plan for 2+ hrs. The bridge is the longest swinging bridge east of the Mississippi.
+          </div>
+          <div class="stop-tags">
+            <span class="tag">Suspension Bridge</span>
+            <span class="tag">7 mi RT Hike</span>
+            <span class="tag">Free</span>
+          </div>
+        </div>
+
+        <div class="stop">
+          <div class="stop-time">01:00 PM <span class="dur">· flexible</span></div>
+          <div class="stop-name">Meadowlark Coffee</div>
+          <div class="stop-addr">109 Bradford St NE, Gainesville · ★ 4.9</div>
+          <div class="stop-note">Open Monday until 7:30pm. Seasonal lattes, in-house syrups, phenomenal pastries. Decompress here before the last leg back to Chamblee.</div>
+          <div class="stop-tags">
+            <span class="tag">Coffee</span>
+            <span class="tag">Decompression</span>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+  </section>
+</div>
+
+<!-- NOTES -->
+<section class="notes">
+  <div class="container">
+    <h2>Field <em>notes</em></h2>
+    <div class="notes-grid">
+
+      <div class="note">
+        <h3>★ Cell Service</h3>
+        <p>Drops out about 15 minutes from the cabin and stays spotty around Suches. Download offline maps before you turn off GA-60. Expect no coverage on the Cooper Creek and Swinging Bridge trails.</p>
+      </div>
+
+      <div class="note">
+        <h3>★ Groceries &amp; Provisions</h3>
+        <p>No real grocery store near the cabin. Stock up in Dahlonega on Saturday before heading up. Walmart in Blue Ridge is the backup if you forget anything — about 35 min from the cabin.</p>
+      </div>
+
+      <div class="note">
+        <h3>★ FS Road 816 Closure</h3>
+        <p>The direct dirt road to the Swinging Bridge parking lot is currently closed. Access is via the Benton MacKaye Trail from GA Hwy 60 — a 3.5-mile hike each way. Confirm conditions with the Blue Ridge Ranger District before Monday.</p>
+      </div>
+
+      <div class="note">
+        <h3>★ Wolf Mountain Reservations</h3>
+        <p>Saturday tables fill up. Book ahead. Wine tasting closes at 5pm. Tasting fee is around $50/person — bottle &amp; brunch is the better play if you want lunch.</p>
+      </div>
+
+      <div class="note">
+        <h3>★ Brasstown Bald Logistics</h3>
+        <p>$8/person entrance and shuttle fee (free for kids under 16). Shuttle goes from the parking area to the summit, or hike the steep 0.6-mile trail. Off-season bathrooms are porta-johns only.</p>
+      </div>
+
+      <div class="note">
+        <h3>★ Driving the Mountain</h3>
+        <p>The road into Suches gets steep and windy at the end, with sharp switchbacks. Arrive before dark for easier navigation. If anyone in the car is prone to motion sickness, plan accordingly.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <span>Trip Brief · Compiled Apr 28, 2026</span>
+      <em>For the Bebs — safe travels.</em>
+      <span>Chamblee → Suches → Home</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
