@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camping Meal Planner · Suches Weekend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EFE7D6;
+    --bg-deep: #E5DAC2;
+    --paper: #F6F0E1;
+    --ink: #1B2620;
+    --ink-soft: #3D4943;
+    --ink-muted: #6F6A5C;
+    --rust: #B5511E;
+    --rust-deep: #8C3A12;
+    --moss: #3F5C42;
+    --moss-deep: #1F3024;
+    --gold: #C29230;
+    --rule: #C9BFA8;
+    --rule-deep: #8C8164;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(63,92,66,0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(181,81,30,0.04) 0%, transparent 50%);
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero { padding: 56px 0 32px; border-bottom: 1px solid var(--rule); position: relative; }
+  .hero-meta {
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-muted); margin-bottom: 48px; flex-wrap: wrap; gap: 12px;
+  }
+  .hero-meta span::before { content: '✦  '; color: var(--rust); }
+  .hero-meta a { color: var(--rust); text-decoration: none; border-bottom: 1px solid var(--rust); }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(48px, 9vw, 124px); line-height: 0.95;
+    letter-spacing: -0.04em; color: var(--moss-deep);
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--rust);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  }
+  .hero-tagline {
+    margin-top: 24px;
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 20px; line-height: 1.45;
+    color: var(--ink-soft); max-width: 620px; font-weight: 300;
+  }
+
+  .legend {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    padding: 24px 0; border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .legend .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+  }
+
+  .day-block {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .day-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+  }
+  .day-header h2 {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: 44px; letter-spacing: -0.02em; color: var(--moss-deep);
+  }
+  .day-header h2 em { font-style: italic; color: var(--rust); }
+  .day-header .src {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted);
+  }
+
+  .meal-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 28px 30px;
+    margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 28px;
+    transition: border-color 0.2s ease;
+  }
+  .meal-card:hover { border-color: var(--rule-deep); }
+  .meal-card.featured {
+    background: var(--moss-deep);
+    color: var(--paper);
+    border-color: var(--moss-deep);
+  }
+  .meal-card.featured .meal-method,
+  .meal-card.featured .meal-meta-label,
+  .meal-card.featured .ing-label { color: rgba(246,240,225,0.65); }
+  .meal-card.featured .meal-name { color: var(--paper); }
+  .meal-card.featured .meal-name em { color: var(--gold); }
+  .meal-card.featured .meal-ingredients,
+  .meal-card.featured .meal-notes { color: rgba(246,240,225,0.85); }
+  .meal-card.featured .meal-notes { border-top-color: rgba(246,240,225,0.2); }
+
+  .meal-side {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .meal-slot {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--rust);
+  }
+  .meal-method {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted);
+  }
+
+  .meal-body { display: flex; flex-direction: column; gap: 14px; }
+  .meal-name {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: 30px; line-height: 1.15; letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .meal-name em { font-style: italic; color: var(--rust); }
+  .meal-name .heart { color: var(--rust); font-style: normal; margin-left: 4px; }
+
+  .meal-meta-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted); margin-bottom: 4px;
+  }
+  .ing-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted); margin-bottom: 4px;
+  }
+  .meal-ingredients {
+    font-size: 14.5px; color: var(--ink-soft); line-height: 1.6;
+  }
+  .meal-notes {
+    font-size: 14px; color: var(--ink-soft); line-height: 1.6;
+    padding-top: 14px; border-top: 1px solid var(--rule);
+    font-style: italic;
+  }
+
+  .day-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .day-tag .icon {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .pack-list {
+    background: var(--moss-deep);
+    color: var(--paper);
+    padding: 64px 0; margin-top: 48px;
+    position: relative; overflow: hidden;
+  }
+  .pack-list::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q 15 10 30 30 T 60 30' stroke='%23F6F0E1' stroke-width='0.5' fill='none' opacity='0.06'/%3E%3Cpath d='M0 45 Q 15 25 30 45 T 60 45' stroke='%23F6F0E1' stroke-width='0.5' fill='none' opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 120px; pointer-events: none;
+  }
+  .pack-list h2 {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: 32px; letter-spacing: -0.02em;
+    color: var(--paper); margin-bottom: 32px;
+  }
+  .pack-list h2 em { font-style: italic; color: var(--gold); }
+  .pack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 56px; }
+  .pack-col h3 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px; font-weight: 500;
+  }
+  .pack-col ul { list-style: none; padding: 0; }
+  .pack-col li {
+    font-size: 14.5px; color: rgba(246,240,225,0.85); line-height: 1.7;
+    padding-left: 20px; position: relative;
+  }
+  .pack-col li::before {
+    content: '◇'; position: absolute; left: 0; color: var(--gold);
+    font-size: 11px; top: 5px;
+  }
+
+  footer {
+    padding: 48px 0; border-top: 1px solid var(--rule);
+    background: var(--bg-deep); position: relative; z-index: 2;
+  }
+  .footer-row {
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted); flex-wrap: wrap; gap: 16px;
+  }
+  .footer-row em {
+    font-family: 'Fraunces', serif; font-style: italic;
+    text-transform: none; letter-spacing: 0;
+    font-size: 14px; color: var(--ink-soft);
+  }
+  .footer-row a { color: var(--rust); text-decoration: none; border-bottom: 1px solid var(--rust); }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1, .hero-tagline, .day-block, .pack-list {
+    animation: rise 0.8s ease-out backwards;
+  }
+  .hero h1 { animation-delay: 0.1s; }
+  .hero-tagline { animation-delay: 0.25s; }
+
+  @media (max-width: 760px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 32px 0 24px; }
+    .meal-card { grid-template-columns: 1fr; gap: 16px; padding: 22px; }
+    .day-header h2 { font-size: 32px; }
+    .pack-grid { grid-template-columns: 1fr; gap: 24px; }
+    .legend { gap: 18px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="hero">
+    <div class="hero-meta">
+      <span>FIELD JOURNAL № 01</span>
+      <span>CAMPING MEAL PLANNER</span>
+      <span>SUCHES · MAY 2 — MAY 4</span>
+      <span><a href="index.html">← BACK TO TRIP</a></span>
+    </div>
+    <h1>Camping<br><em>Menu</em></h1>
+    <p class="hero-tagline">
+      Three days of fire-cooked meals, marinated meats, and one upgraded ramen for the road home.
+      Prep what you can at home — counter space at the cabin is precious.
+    </p>
+  </header>
+
+  <section class="legend">
+    <span><span class="dot" style="background:var(--rust)"></span>Campfire 🔥</span>
+    <span><span class="dot" style="background:var(--moss)"></span>Stovetop ☕</span>
+    <span><span class="dot" style="background:var(--gold)"></span>Featured · Date Night</span>
+  </section>
+
+  <article class="day-block">
+    <div class="day-header">
+      <h2>Saturday <em>☀️</em></h2>
+      <span class="src">Day 01 · Settle in &amp; cook over the fire</span>
+    </div>
+
+    <div class="meal-card featured">
+      <div class="meal-side">
+        <div class="meal-slot">Dinner</div>
+        <div class="meal-method">Campfire 🔥</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Korean BBQ <em>🥩</em><br>Bulgogi / Galbi <span class="heart">♡</span></div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Pre-marinated meat (H Mart!), lettuce wraps, perilla leaves, gochujang, sesame oil, instant rice cups</div>
+        </div>
+        <div class="meal-notes">Marinate meat <strong>before</strong> leaving home. H Mart in Doraville has amazing pre-marinated options ♡</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-side">
+        <div class="meal-slot">+ Side</div>
+        <div class="meal-method">Campfire 🔥</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Corn on the Cob <em>🌽</em></div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Corn, butter, tajín or salt</div>
+        </div>
+        <div class="meal-notes">Soak in water 30 min. Grill in husk, peel &amp; eat with butter + tajín ✦</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-side">
+        <div class="meal-slot">Dessert</div>
+        <div class="meal-method">Campfire 🔥</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">S'mores <em>🍫</em></div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Graham crackers, chocolate, marshmallows</div>
+        </div>
+        <div class="meal-notes">Classic. No notes needed 🥹</div>
+      </div>
+    </div>
+  </article>
+
+  <article class="day-block">
+    <div class="day-header">
+      <h2>Sunday <em>🌿</em></h2>
+      <span class="src">Day 02 · Long day, three meals on the fire</span>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-side">
+        <div class="meal-slot">Breakfast</div>
+        <div class="meal-method">Stovetop ☕</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Miso Soup</div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Miso paste, silken tofu, green onions</div>
+        </div>
+        <div class="meal-notes">Start miso first — just hot water + paste.</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-side">
+        <div class="meal-slot">Lunch</div>
+        <div class="meal-method">Campfire 🔥</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Hot Dogs <em>🌭</em><br>+ Sweet Potato Foil Packets</div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Hot dogs, buns, condiments; sweet potatoes, bell peppers, zucchini, onion, butter, Italian seasoning</div>
+        </div>
+        <div class="meal-notes">Pre-chop veggies at home in zip bags. Foil packets go in coals 25 min ahead ♡</div>
+      </div>
+    </div>
+
+    <div class="meal-card featured">
+      <div class="meal-side">
+        <div class="meal-slot">Dinner</div>
+        <div class="meal-method">Campfire 🔥</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Steak Night <em>🥩</em><br>+ Potato Foil Packets &amp; Corn</div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Ribeye or NY strip, salt, pepper, garlic butter; russet potatoes, rosemary; corn</div>
+        </div>
+        <div class="meal-notes">Season steak at home. Let it rest to room temp before grilling. This is date night ✦</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-side">
+        <div class="meal-slot">Dessert</div>
+        <div class="meal-method">Campfire 🔥</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Grilled Pineapple <em>🍍</em></div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Fresh pineapple rings, brown sugar, cinnamon</div>
+        </div>
+        <div class="meal-notes">Place cut-side down on grate until caramelized ~5 min. Magical 🥹</div>
+      </div>
+    </div>
+  </article>
+
+  <article class="day-block">
+    <div class="day-header">
+      <h2>Monday <em>🌅</em></h2>
+      <span class="src">Day 03 · Last morning before the drive home</span>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-side">
+        <div class="meal-slot">Breakfast</div>
+        <div class="meal-method">Stovetop ☕</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-name">Upgraded Ramen <em>🍜</em></div>
+        <div>
+          <div class="ing-label">Ingredients</div>
+          <div class="meal-ingredients">Instant ramen, eggs, sriracha OR coconut milk + chili crisp, green onions</div>
+        </div>
+        <div class="meal-notes">Quick &amp; warming before the drive home. Use leftover green onions from miso night ✿</div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<section class="pack-list">
+  <div class="container">
+    <h2>Prep <em>at home</em></h2>
+    <div class="pack-grid">
+      <div class="pack-col">
+        <h3>★ Marinate &amp; Season</h3>
+        <ul>
+          <li>Bulgogi / galbi from H Mart (or marinate ribeye in soy-sesame-garlic 24 hrs ahead)</li>
+          <li>Steak: salt, pepper, garlic powder rub the night before</li>
+          <li>Sweet potatoes &amp; russets — scrub, leave whole</li>
+        </ul>
+      </div>
+      <div class="pack-col">
+        <h3>★ Pre-Chop &amp; Bag</h3>
+        <ul>
+          <li>Bell peppers, zucchini, onions for foil packets — zip bags</li>
+          <li>Green onions chopped (for both miso &amp; ramen)</li>
+          <li>Pineapple rings for dessert — pre-sliced container</li>
+        </ul>
+      </div>
+      <div class="pack-col">
+        <h3>★ Pantry &amp; Dry</h3>
+        <ul>
+          <li>Instant rice cups · instant ramen packets</li>
+          <li>Miso paste · gochujang · sesame oil · chili crisp</li>
+          <li>Brown sugar + cinnamon shaker · tajín · Italian seasoning</li>
+          <li>Graham crackers · chocolate · marshmallows</li>
+        </ul>
+      </div>
+      <div class="pack-col">
+        <h3>★ Cook Gear</h3>
+        <ul>
+          <li>Heavy-duty foil (lots of it)</li>
+          <li>Cast iron grate or pan for the steak sear</li>
+          <li>Small camp stove + fuel for miso &amp; ramen</li>
+          <li>Tongs · skewers · oven mitt · trash bags</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <span>Meal Plan · Compiled Apr 29, 2026</span>
+      <em>Cooked over a fire, eaten under stars ✦</em>
+      <span><a href="index.html">← Back to trip</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
